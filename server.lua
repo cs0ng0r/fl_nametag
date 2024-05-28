@@ -1,6 +1,15 @@
 local playerNames = {}
 local joinTimes = {}
 
+ESX = exports.es_extended:getSharedObject()
+
+RegisterCommand('jelvenyszam', function(source, args, rawCommand)
+	local xPlayer = ESX.GetPlayerFromId(source)
+	MySQL.update.await('UPDATE users SET badgenum = ? WHERE identifier = ?', {
+		args[1], xPlayer.identifier
+	})
+end, false)
+
 -- JOB DUTY
 
 ESX.RegisterServerCallback("nametag:PlayerJob", function(source, cb)
@@ -14,7 +23,16 @@ ESX.RegisterServerCallback('changeJobDutyState', function(source, cb)
 	local sb = Player(source).state
 	local newState2 <const> = not sb.jobDuty
 	sb.jobDuty = newState2
-	sb.jobLabel = JOB_LABELS and JOBS[xPlayer.getJob().name] .. " - " .. xPlayer.getJob().grade_label or nil
+	local badge = MySQL.scalar.await('SELECT `badgenum` FROM `users` WHERE `identifier` = ? LIMIT 1', {
+		xPlayer.identifier
+	})
+
+	if badge == nil then
+		badge = ""
+	else
+		badge = " | #" .. badge
+	end
+	sb.jobLabel = JOB_LABELS and JOBS[xPlayer.getJob().name] .. " - " .. xPlayer.getJob().grade_label .. badge or nil
 end)
 
 function isPlayerInJobduty(player)
