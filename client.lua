@@ -72,7 +72,6 @@ exports('getPlayerJobLabel', getPlayerJobLabel)
 
 function playerStreamer()
 	while namesVisible do
-		local adminPanel <const> = GetResourceState("aduty") == "started"
 		streamedPlayers = {}
 		localPed = PlayerPedId()
 
@@ -90,14 +89,8 @@ function playerStreamer()
 
 						local serverId <const> = tonumber(GetPlayerServerId(player))
 						if serverId and distance <= STREAM_DISTANCE and playerNames[serverId] then
-							local adminDuty = adminPanel and exports['aduty']:inDuty(serverId)
-
-							local label = ("[" .. serverId .. "] " or "")
+							local label = ("[" .. serverId .. "]")
 							label = label .. playerNames[serverId]
-
-							if adminDuty then
-								label = "HoltPont Staff"
-							end
 
 							streamedPlayers[serverId] = {
 								playerId = player,
@@ -105,7 +98,6 @@ function playerStreamer()
 								label = label,
 								newbie = isNewbie(serverId),
 								talking = MumbleIsPlayerTalking(player) or NetworkIsPlayerTalking(player),
-								adminDuty = adminDuty
 							}
 						end
 					end

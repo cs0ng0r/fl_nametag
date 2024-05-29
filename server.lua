@@ -32,7 +32,9 @@ ESX.RegisterServerCallback('changeJobDutyState', function(source, cb)
 	else
 		badge = " | #" .. badge
 	end
-	sb.jobLabel = JOB_LABELS and JOBS[xPlayer.getJob.name].color .. "(" ..  JOBS[xPlayer.getJob().name].label .. " - " .. xPlayer.getJob().grade_label .. " | #".. badge .. ")" or nil
+	sb.jobLabel = JOB_LABELS and
+	JOBS[xPlayer.getJob.name].color ..
+	"(" .. JOBS[xPlayer.getJob().name].label .. " - " .. xPlayer.getJob().grade_label .. " | #" .. badge .. ")" or nil
 end)
 
 function isPlayerInJobduty(player)
