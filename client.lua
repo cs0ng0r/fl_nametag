@@ -143,7 +143,7 @@ function drawNames()
 						scale = 0.25,
 					} or nil,
 					jobDuty and not playerData.adminDuty and {
-						text = '<font>' .. jobLabel .. ')</font>',
+						text = '<font>' .. jobLabel .. '</font>',
 						pos = { 0, -0.050 },
 						scale = 0.30,
 					} or nil,
