@@ -72,7 +72,7 @@ exports('getPlayerJobLabel', getPlayerJobLabel)
 
 function playerStreamer()
 	while namesVisible do
-		local adminPanel <const> = GetResourceState(ADMINPANEL_SCRIPT) == "started"
+		local adminPanel <const> = GetResourceState("aduty") == "started"
 		streamedPlayers = {}
 		localPed = PlayerPedId()
 
@@ -90,16 +90,14 @@ function playerStreamer()
 
 						local serverId <const> = tonumber(GetPlayerServerId(player))
 						if serverId and distance <= STREAM_DISTANCE and playerNames[serverId] then
-							local adminDuty = adminPanel and exports[ADMINPANEL_SCRIPT]:isPlayerInAdminduty(serverId)
+							local adminDuty = adminPanel and exports['aduty']:inDuty(serverId)
 
-							local label = (playerNames[serverId] or "")
+							local label = ("[" .. serverId .. "] " or "")
+							label = label .. playerNames[serverId]
+
 							if adminDuty then
-								local adminLabel <const> = adminPanel and
-								exports[ADMINPANEL_SCRIPT]:getPlayerAdminLabel(serverId) or 'Admin'
-								label = GetPlayerName(player) ..
-								' <font color="' .. ADMIN_COLOR .. '">(' .. adminLabel .. ')</font>'
+								label = "HoltPont Staff"
 							end
-							label = label .. " (" .. serverId .. ")"
 
 							streamedPlayers[serverId] = {
 								playerId = player,
@@ -153,32 +151,11 @@ function drawNames()
 						scale = 0.25,
 					} or nil,
 					jobDuty and not playerData.adminDuty and {
-						text = '<font color="' .. JELVENY_COLOR .. '">(' .. jobLabel .. ')</font>',
-						pos = { 0, 0.020 },
-						scale = 0.25,
+						text = '<font>' .. jobLabel .. ')</font>',
+						pos = { 0, -0.050 },
+						scale = 0.30,
 					} or nil,
 				}, scale, 200 * scale)
-
-				if ADMINLOGO.visible and playerData.adminDuty then
-					DrawMarker(
-						43,
-						coords + vector3(0, 0, 0.15),
-						vector3(0, 0, 0),
-						vector3(89.9, 180, 0),
-						vector3(scale * ADMINLOGO.size, scale * ADMINLOGO.size, 0),
-						255,
-						255,
-						255,
-						255,
-						false, -- up-down anim
-						true, -- face cam
-						0,
-						ADMINLOGO.rotate, -- rotate
-						"adminsystem",
-						"logo",
-						false --[[drawon ents]]
-					)
-				end
 			end
 		end
 

@@ -1,20 +1,23 @@
 STREAM_DISTANCE = 40
 
 NEWBIE_TIME = 60 * 60 --Seconds / Másodpercek
-NEWBIE_TEXT = "** Új a városban **"
+NEWBIE_TEXT = ""
 
 SPEAK_ICON = "🔊"
 
 JOB_LABELS = true
 
 ADMIN_RANKS = { --permission groups for /changename command
+	["owner"] = true,
 	["admin"] = true,
 }
 
 
 JOBS = {
-	['police'] = "Rendörség",
-	['ambulance'] = "Mentöszolgálat",
+	['police'] = {
+		label = "Rendőrség",
+		color = "~b~",
+	}
 }
 
 ADMINPANEL_SCRIPT = 'fl_adminpanel'
@@ -24,9 +27,6 @@ ADMINLOGO = {
 	rotate = false,
 	size = 0.3
 }
-
-JELVENY_COLOR = "FFF333"
-JELVENY_COMMAND = "jelveny"
 
 
 function output(text, target)
