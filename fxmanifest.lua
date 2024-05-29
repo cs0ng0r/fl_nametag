@@ -1,7 +1,8 @@
 fx_version("cerulean")
 lua54('yes')
 game("gta5")
-author("Csoki")
+author("Original: Csoki")
+description("Edited by: Cs0ng0r")
 
 dependency("es_extended")
 dependency("oxmysql")
