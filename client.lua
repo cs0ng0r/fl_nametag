@@ -30,7 +30,7 @@ RegisterNetEvent("receivePlayerNames", function(names, newbies)
 	newbiePlayers = newbies
 end)
 
-RegisterCommand(JELVENY_COMMAND, function()
+RegisterCommand("jelveny", function()
 	if not checkJob() then
 		return
 	else
